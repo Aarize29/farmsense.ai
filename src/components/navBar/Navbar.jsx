@@ -97,7 +97,8 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-    <div className='flex flex-wrap bg-gray-800 justify-center mt-px '>
+    {auth.currentUser && (
+      <div className='flex flex-wrap bg-gray-800 justify-center mt-px '>
     <div className="flex items-center justify-center flex-shrink-0 text-white w-1/2 mb-3 mt-3 ">
       <div className="text-sm lg:flex-grow">
           <Link
@@ -141,6 +142,7 @@ const Navbar = () => {
         </div>
       </div>
       </div>
+    )}
     </>
 
   )
