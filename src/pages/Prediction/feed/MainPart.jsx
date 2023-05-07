@@ -5,7 +5,18 @@ import {auth,db} from '../../../firebase'
 import { collection, addDoc } from "firebase/firestore"; 
 import { useSpeechSynthesis } from "react-speech-kit";
 import { crop_model_predict } from '../../../data_portal';
-
+import { Chart } from "react-google-charts";
+import Popup from '../../../components/popupchatbot/Popup';
+import {TbMessageChatbot} from 'react-icons/tb'
+export const data = [
+  ["Task", "Hours per Day"],
+  ["Work", 1],
+  ["Eat", 2],
+  ["Commute", 2]
+];
+export const options = {
+  title: "Nutrient",
+};
 const FeedMainPart = () => {
   const [imageUpload, setImageUpload] = useState(null)
   const [base64, setBase64] = useState(null)
@@ -15,7 +26,10 @@ const FeedMainPart = () => {
       photo:'',
   })
   const [predictedDisease,setPredictedDisease]=useState("No Species Detected")
-   
+  const [buttonPopup, setButtonPopup] = useState(false)
+  
+
+ 
     //speech
     const { speak } = useSpeechSynthesis();
     const convert = () => {
@@ -83,18 +97,33 @@ const FeedMainPart = () => {
     <>
       {/* <NavBar /> */}
       <div className='main flex lg:flex-row flex-col    justify-between mt-10 lg:mt-5'>
-       <div className="model flex flex-col  justify-center items-center  lg:w-[950px]  lg:h-[600px] border-solid border-[2px] lg:m-3 m-5 ">
-         <h1 className='lg:text-2xl text-1xl mb-10  font-bold'>Realtime Analysis</h1>
-         <form className='flex flex-col items-center justify center' onSubmit={handlPrediction}>
-         
-                <button className='m-3 text-white bg-[#6469ff] hover:text-[#6469ff] hover:bg-blue-200 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center'  type='submit'>Predict</button>
-            </form>
-           <h1 className='lg:text-2xl text-1xl font-bold  m-5'>{predictedDisease}</h1>
+        <div className="model flex flex-col  justify-center items-center  lg:w-[950px]  lg:h-[600px] border-solid border-[2px] lg:m-3 m-5 ">
+          <h1 className='lg:text-2xl text-1xl mb-10  font-bold'>Demo chart</h1>
+          <Chart
+            chartType="PieChart"
+            data={data}
+            options={options}
+            width={"100%"}
+            height={"400px"}
+          />
+        </div>
+       <div className=' flex lg:hidden justify-end mr-10 text-2xl' >
+         <button onClick={view} className='flex'>
+          <TbMessageChatbot/> <h1 className='text-sm'>HelperBot</h1>
+          </button> 
        </div>
-       <h1 className="font-bold flex justify-center lg:hidden">
-          HelperBot
-       </h1>
-       <ChatBot/>
+
+
+       {/*Pop */}
+       <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
+       <div className="flex flex-col  justify-center  items-center">
+       <h1 className='text-xl font-bold text-gray-700 flex justify-center'>Helper Bot</h1>
+
+        <div className='w-[350px] h-[400px] flex justify-center items-center '>
+          <ChatBot/>
+        </div>
+       </div>
+</Popup>
     </div>
     </>
   )

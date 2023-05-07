@@ -8,7 +8,8 @@ import {auth,db} from '../../../firebase'
 import { collection, addDoc } from "firebase/firestore"; 
 import { useSpeechSynthesis } from "react-speech-kit";
 import { model_predict } from '../../../data_portal';
-
+import Popup from '../../../components/popupchatbot/Popup';
+import {TbMessageChatbot} from 'react-icons/tb'
 const MainPart = () => {
   const [imageUpload, setImageUpload] = useState(null)
   const [base64, setBase64] = useState(null)
@@ -18,6 +19,7 @@ const MainPart = () => {
       photo:'',
   })
   const [predictedDisease,setPredictedDisease]=useState("No Disease")
+  const [buttonPopup, setButtonPopup] = useState(false)
      //speech
   const { speak } = useSpeechSynthesis();
   const convert = () => {
@@ -103,10 +105,30 @@ const MainPart = () => {
             </form>
            <h1 className='lg:text-2xl text-1xl font-bold  m-5'>{predictedDisease}</h1>
        </div>
+       <div className='hidden lg:block'>
        <h1 className="font-bold flex justify-center lg:hidden">
           HelperBot
        </h1>
        <ChatBot/>
+       </div>
+       {/* for mobile */}
+       <div className=' flex lg:hidden justify-end mr-10 text-2xl' >
+         <button onClick={view} className='flex'>
+          <TbMessageChatbot/> <h1 className='text-sm'>HelperBot</h1>
+          </button> 
+       </div>
+
+
+       {/*Pop */}
+       <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
+       <div className="flex flex-col  justify-center  items-center">
+       <h1 className='text-xl font-bold text-gray-700 flex justify-center'>Helper Bot</h1>
+
+        <div className='w-[350px] h-[400px] flex justify-center items-center '>
+          <ChatBot/>
+        </div>
+       </div>
+</Popup>
     </div>
     </>
   )
