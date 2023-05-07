@@ -104,6 +104,12 @@ const ChickenMainPart = () => {
             </form>
            <h1 className='lg:text-2xl text-1xl font-bold  m-5'>{predictedDisease}</h1>
        </div>
+       <div className='hidden lg:block'>
+       <h1 className="font-bold flex justify-center lg:hidden">
+          HelperBot
+       </h1>
+       <ChatBot/>
+       </div>
        <div className=' flex lg:hidden justify-end mr-10 text-2xl' >
          <button onClick={view} className='flex'>
           <TbMessageChatbot/> <h1 className='text-sm'>HelperBot</h1>
